@@ -88,7 +88,8 @@ func Login(ctx *gin.Context) {
 	//发放token
 	token, err := common.ReleaseToken(user)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"code": 500, "msg": "系统异常"})
+		response.Fail(ctx, nil, "系统异常")
+		//ctx.JSON(http.StatusInternalServerError, gin.H{"code": 500, "msg": "系统异常"})
 		log.Printf("token generate error : %v", err)
 		return
 	}

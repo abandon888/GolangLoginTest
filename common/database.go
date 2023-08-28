@@ -25,7 +25,10 @@ func InitDB() *gorm.DB {
 		panic("failed to connect database,err:" + err.Error())
 	}
 	//创建表 自动迁移（把结构体和数据表进行对应）
-	db.AutoMigrate(&model.User{})
+	err = db.AutoMigrate(&model.User{})
+	if err != nil {
+		return nil
+	}
 	DB = db
 	return db
 }
@@ -36,5 +39,8 @@ func GetDB() *gorm.DB {
 
 func CloseDB() {
 	sqlDB, _ := DB.DB()
-	sqlDB.Close()
+	err := sqlDB.Close()
+	if err != nil {
+		return
+	}
 }
